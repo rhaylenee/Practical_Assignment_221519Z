@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row justify-content-center align-items-center">
+    <h1 class="display-4">Customer Data:</h1>
+    @if (Model.CurrentUser != null)
+    {
+        <p>Full Name: @Html.DisplayFor(m => m.CurrentUser.FullName)</p>
+        <p>Credit Card No: @Html.DisplayFor(m => m.CreditCardNo)</p>
+        <p>Gender: @Html.DisplayFor(m => m.CurrentUser.Gender)</p>
+        <p>Delivery Address: @Html.DisplayFor(m => m.CurrentUser.DeliveryAddress)</p>
+        <p>Email Address: @Html.DisplayFor(m => m.CurrentUser.Email)</p>
+        <p>Photo: @Html.DisplayFor(m => m.CurrentUser.Photo)</p>
+        <p>About Me: @Html.DisplayFor(m => m.CurrentUser.AboutMe)</p>
+    }
+    else
+    {
+        <p>User not found.</p>
+    }
+</div>
+
+<script>
+    var sessionTimeoutInSeconds = 30;
+
+    var timer = setTimeout(function () {
+        var encodedMessage = "You have been idle for the last 30 seconds. You will now be logged out of your account.";
+        window.location.reload();
+        alert(encodedMessage);
+    }, sessionTimeoutInSeconds * 1000); // Alert after 30 seconds of inactivity
+</script>

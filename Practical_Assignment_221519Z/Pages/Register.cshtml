@@ -1,0 +1,129 @@
+﻿@page
+@model Practical_Assignment_221519Z.Pages.RegisterModel
+@{
+}
+<div class="container mt-5">
+
+	<div class="row justify-content-center align-items-center">
+
+		<div class="col-sm-12 col-md-12 col-lg-4">
+			<h1 class="mb-3">Register </h1>
+
+			<form method="post" id="registrationForm">
+				@Html.AntiForgeryToken()
+				<div asp-validation-summary="All" class="text-danger"></div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Email">Email Address</label>
+					<input type="email" asp-for="RModel.Email" class="form-control" />
+					<span asp-validation-for="RModel.Email" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Password">Password</label>
+					<input type="password" asp-for="RModel.Password" class="form-control" id="password" onkeyup="validate()"/>
+					<span asp-validation-for="RModel.Password" class="text-danger"></span>
+					<div id="pwdchecker"></div>
+					<div id="passwordStrength"></div>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.ConfirmPassword">Confirm Password</label>
+					<input type="password" asp-for="RModel.ConfirmPassword" class="form-control" />
+					<span asp-validation-for="RModel.ConfirmPassword" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.FullName">Full Name</label>
+					<input type="Text" asp-for="RModel.FullName" class="form-control" />
+					<span asp-validation-for="RModel.FullName" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.CreditCardNo">Credit Card No</label>
+					<input type="text" maxlength="16" asp-for="RModel.CreditCardNo" class="form-control" />
+					<span asp-validation-for="RModel.CreditCardNo" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Gender">Gender</label>
+					<input type="Text" asp-for="RModel.Gender" class="form-control" />
+					<span asp-validation-for="RModel.Gender" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.MobileNo">Mobile No</label>
+					<input type="tel" asp-for="RModel.MobileNo" class="form-control" />
+					<span asp-validation-for="RModel.MobileNo" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.DeliveryAddress">Delivery Address</label>
+					<input type="Text" asp-for="RModel.DeliveryAddress" class="form-control" />
+					<span asp-validation-for="RModel.DeliveryAddress" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Photo">Photo</label>
+					<input type="file" asp-for="RModel.Photo" class="form-control" />
+					<span asp-validation-for="RModel.Photo" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.AboutMe">About Me</label>
+					<textarea type="text" asp-for="RModel.AboutMe" class="form-control"></textarea>
+					<span asp-validation-for="RModel.AboutMe" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<button class="g-recaptcha"
+							data-sitekey="6LdxT2UpAAAAAJpNkS65GLEa1pA5Y5rTbaepiJL4"
+							data-callback='onSubmit'
+							data-action='submit'>
+						Register
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	function validate() {
+		var password = document.getElementById('password').value;
+		if (password.length < 12) {
+			document.getElementById("pwdchecker").innerHTML = "Password Length must be at least 12 characters";
+			document.getElementById("pwdchecker").style.color = "Red";
+			return "too_short";
+		} else if (password.search(/[0-9]/) === -1) {
+			document.getElementById("pwdchecker").innerHTML = "Password requires at least 1 number";
+			document.getElementById("pwdchecker").style.color = "Red";
+			return "no_number";
+		} else if (password.search(/[a-z]/) === -1) {
+			document.getElementById("pwdchecker").innerHTML = "Password requires at least 1 lowercase letter";
+			document.getElementById("pwdchecker").style.color = "Red";
+			return "no_lower_case";
+		} else if (password.search(/[A-Z]/) === -1) {
+			document.getElementById("pwdchecker").innerHTML = "Password requires at least 1 uppercase letter";
+			document.getElementById("pwdchecker").style.color = "Red";
+			return "no_uppercase_case";
+		} else if (password.search(/[^a-zA-Z0-9]/) === -1) {
+			document.getElementById("pwdchecker").innerHTML = "Password requires at least 1 special character";
+			document.getElementById("pwdchecker").style.color = "Red";
+			return "no_special_character";
+		} else {
+			document.getElementById("pwdchecker").innerHTML = "Excellent!";
+			document.getElementById("pwdchecker").style.color = "Blue";
+			var feedbackElement = document.getElementById('passwordStrength');
+			feedbackElement.innerHTML = 'STRONG Password';
+		}
+		
+	}
+
+</script>
+<script src="https://google.com/recaptcha/api.js"></script>
+<script>
+	function onSubmit(token) {
+		document.getElementById("registrationForm").submit();
+	}
+</script>
